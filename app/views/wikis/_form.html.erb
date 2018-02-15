@@ -9,12 +9,18 @@
     </ul>
   </div>
   <% end %>
+  <p>
     <%= f.label :title %>
     <%= f.text_field :title, class: "form-control", placeholder: "Enter wiki title" %>
+  </p>
+  <p>
     <%= f.label :body %>
     <%= f.text_area :body, rows: 8, class: "form-control", placeholder: "Enter wiki body" %>
+  </p>
+  <p>
     <%= f.label :private %>
     <%= f.check_box :private, class: "form-control" %>
+  </p>
   <div class="form-group">
     <%= f.submit "Save", class: "btn btn-success" %>
   </div>

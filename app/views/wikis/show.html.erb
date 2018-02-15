@@ -1,5 +1,8 @@
 <h1><%= @wiki.title %></h1>
 
-<%= @wiki.body %>
+<p><%= @wiki.body %></p>
 
-Created by: <%= @wiki.user.email   %>
+<p>Created by: <%= @wiki.user.email %></p>
+
+<%= link_to "Edit Wiki", edit_wiki_path(@wiki) %>
+<%= link_to "Delete Wiki", @wiki, method: :delete, data: {confirm: 'Are you sure you want to delete this post?'} %>
