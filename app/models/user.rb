@@ -1,5 +1,7 @@
 class User < ApplicationRecord
 
+  after_initialize :set_role
+
   before_save { self.email = email.downcase if email.present? }
 
   # Include default devise modules. Others available are:
@@ -8,5 +10,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   has_many :wikis, dependent: :destroy
+
+  def set_role
+    self.role ||= 0
+  end
+
+  enum role: [:standard, :premium, :admin]
 
 end

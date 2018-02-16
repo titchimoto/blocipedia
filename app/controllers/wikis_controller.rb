@@ -1,4 +1,7 @@
+
 class WikisController < ApplicationController
+  include Pundit
+
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
@@ -11,11 +14,15 @@ class WikisController < ApplicationController
 
   def new
     @wiki = Wiki.new
+    authorize @wiki
+
   end
 
   def create
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
+
+    authorize @wiki
 
 
     if @wiki.save
@@ -30,11 +37,14 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
 
   def update
     @wiki = Wiki.find(params[:id])
     @wiki.assign_attributes(wiki_params)
+
+    authorize @wiki
 
     if @wiki.save
       flash[:notice] = "Wiki was successfully updated"
@@ -48,11 +58,13 @@ class WikisController < ApplicationController
   def destroy
     @wiki = Wiki.find(params[:id])
 
+    authorize @wiki
+
     if @wiki.destroy
-      flash[:notice] = "Wiki was successfully deleted."
-      redirect_to wikis_path
+      flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
+      redirect_to root_path
     else
-      flash.now[:alert] = "There was an error deleting the wiki. Please try again."
+      flash.now[:alert] = "There was error deleting the wiki."
       render :show
     end
   end
