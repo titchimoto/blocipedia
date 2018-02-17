@@ -41,6 +41,8 @@ gem 'figaro', '1.0'
 
 gem "pundit"
 
+gem 'faker'
+
 
 
 group :development do
