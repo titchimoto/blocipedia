@@ -3,8 +3,6 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
 
-  <p>Current plan: <%= @user.role %></p>
-
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
@@ -30,7 +28,7 @@
 
   <div class="field">
     <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
+    <%= f.password_field :current_password, autocomplete: "on" %>
   </div>
 
 
@@ -38,6 +36,22 @@
     <%= f.submit "Update" %>
   </div>
 <% end %>
+
+<% if user_is_standard %>
+  <h3>Upgrade to Premium Account!</h3>
+  <p>Pay a one time fee of <strong>$15.00</strong> to allow you to create private Wiki's and add collaborators!</p>
+  <%= link_to "Upgrade", new_charge_path  %>
+<% else %>
+  <h3>Downgrade account to Standard?</h3>
+  <p> Unhappy? Downgrade your account back down to Standard account.</p>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= f.hidden_field :role, value: "standard" %>
+    <%= f.submit "Downgrade", class: "btn btn-danger", data: { confirm: "Are you sure you want to downgrade to a Standard account?" } %>
+  <% end %>
+
+<% end %>
+
+
 
 <h3>Cancel my account</h3>
 

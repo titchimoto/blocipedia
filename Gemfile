@@ -43,6 +43,9 @@ gem "pundit"
 
 gem 'faker'
 
+gem 'stripe'
+
+
 
 
 group :development do

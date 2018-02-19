@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resources :wikis
 
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'registrations' }
+
+  resources :charges, only: [:new, :create]
+
   get 'welcome/index'
 
   get 'welcome/about'

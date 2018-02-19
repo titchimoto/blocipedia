@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  attr_accessor :current_password
+
 
   after_initialize :set_role
 
