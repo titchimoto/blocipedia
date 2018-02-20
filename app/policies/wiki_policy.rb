@@ -7,6 +7,21 @@ class WikiPolicy < ApplicationPolicy
     @wiki = wiki
   end
 
+  class Scope < Scope
+    def resolve
+      if user.present? && ( user.admin? || user.premium? )
+        scope.all
+        # scope.where(???)
+      else
+        scope.where(private: false)
+      end
+    end
+  end
+
+  def show?
+    user.present? && (wiki.user == user || !wiki.private?)
+  end
+
   def create?
     user.present?
   end
@@ -18,4 +33,5 @@ class WikiPolicy < ApplicationPolicy
   def destroy?
     user.admin? || (@wiki.user == user)
   end
+
 end
