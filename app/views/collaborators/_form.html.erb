@@ -1,0 +1,23 @@
+<h4>Collaborators</h4>
+<% if @wiki.collaborators.any? %>
+  <ul>
+    <% @wiki.collaborators.each do |collab| %>
+      <li><%= collab.user.email %>
+        <% if current_user.admin? || @wiki.user_id == current_user.id %>
+          <%= link_to [@wiki, collab], method: :delete do %> <b>- Remove</b>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No collaborators yet.</p>
+<% end %>
+
+<% if (user_is_premium && @wiki.user == current_user) || current_user.admin? %>
+  <h5>Add Collaborators: </h5>
+      <%= form_tag [@wiki, Collaborator.new] do %>
+          <%= text_field_tag :email, params[:email], placeholder: "Enter collaborator email" %>
+          <%= submit_tag "Add collaborator" %>
+  <% end %>
+<% end %>

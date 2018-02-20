@@ -1,0 +1,12 @@
+<% if !@wiki.private %>
+  <h5>This is a public Wiki, any one can update it!</h5>
+<% else %>
+  <h5>Collaborators: </h5>
+  <% if @wiki.collaborators.any? %>
+    <% @wiki.collaborators.each do |collab| %>
+      <li><%= collab.user.email %></li>
+    <% end %>
+    <% else %>
+    <p>No collaborators yet.</p>
+  <% end %>
+<% end %>

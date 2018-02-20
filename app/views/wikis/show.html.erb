@@ -4,6 +4,8 @@
 
 <p>Created by: <%= @wiki.user.email %></p>
 
+<%= render 'collaborators/collaborators' %>
+
 <% if user_signed_in? %>
   <%= link_to "Edit Wiki", edit_wiki_path(@wiki) %>
   <%= link_to "Delete Wiki", @wiki, method: :delete, data: {confirm: 'Are you sure you want to delete this post?'} %>

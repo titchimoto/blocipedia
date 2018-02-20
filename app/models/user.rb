@@ -4,6 +4,7 @@ class User < ApplicationRecord
   enum role: [:standard, :premium, :admin]
 
   has_many :wikis, dependent: :destroy
+  has_many :collaborators, dependent: :destroy
 
   after_initialize :set_role
   before_save { self.email = email.downcase if email.present? }
